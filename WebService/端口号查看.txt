@@ -1,0 +1,3 @@
+netstat -aon|findstr "8089"   查看8089端口的详细信息（PID）
+tasklist|findstr "2608"  查看2608这个PID被哪个进程占用
+ 
