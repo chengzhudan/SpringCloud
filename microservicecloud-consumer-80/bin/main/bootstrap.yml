@@ -1,0 +1,10 @@
+server:
+  port: 8080
+eureka:  client:    service-url:      defaultZone: http://localhost:7001/eureka
+  instance:    prefer-ip-address: true
+    instance-id: microservicecloud-dept8080
+#feign开启hystrix熔断
+feign:
+    hystrix:
+        enabled: true
+spring:  application:    name: microservicecloud-consumer8080

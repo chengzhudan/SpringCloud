@@ -1,0 +1,66 @@
+buildscript {
+    ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+    repositories {
+        flatDir { dirs 'lib' }
+        mavenLocal()
+		//mavenCentral()
+    }
+    dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+
+jar {
+    baseName = 'microservicecloud-consumer80'
+    version = '1.0.0'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	flatDir { dirs 'lib' }
+	mavenLocal()
+	maven{
+		url{'http://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+    //如果找不到，就去Google仓库去找
+    google()
+    //再找不到，就去jcenter仓库去找
+    jcenter()
+    //maven中央仓库比较慢
+   	//mavenCentral()
+}
+
+tasks.withType(JavaCompile){ options.encoding = "UTF-8" }
+
+tasks.withType(Javadoc){
+    options.encoding = "UTF-8"
+    options.charSet = "UTF-8"
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.cloud:spring-cloud-starter-eureka')
+    compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('org.springframework:springloaded')
+    compile('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.cloud:spring-cloud-starter-feign')
+    //断路器
+ 	compile('org.springframework.cloud:spring-cloud-starter-hystrix')
+ 	//Hystrix 仪表盘
+ 	compile('org.springframework.boot:spring-boot-starter-actuator')
+ 	//compile('org.springframework.cloud:spring-cloud-starter-hystrix-dashboard')
+ 	compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard')
+	//compile('org.apache.commons:commons-lang3:3.3.2')
+    //compileOnly('org.projectlombok:lombok')
+}
+
+dependencyManagement { imports {  mavenBom "org.springframework.cloud:spring-cloud-dependencies:Edgware.RELEASE" }	}
